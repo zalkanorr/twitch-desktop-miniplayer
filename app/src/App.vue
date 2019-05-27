@@ -28,7 +28,6 @@
 <script>
 import VideoPlayer from "./components/video-player.vue";
 const twitch = require("twitch-m3u8")("1a6wn2y0bpzxsr5senaoz7llfpyvgc");
-// const twitch = require("twitch-m3u8")("1a6wn2y0bpzxsr5senaoz7llfpyvgc");
 
 export default {
   name: "App",
