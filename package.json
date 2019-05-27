@@ -1,0 +1,29 @@
+{
+  "name": "twitch-miniplayer",
+  "version": "0.1.0",
+  "description": "A twitch miniplayer (browser window application) intended to use while gaming on a single monitor",
+  "main": "main.js",
+  "scripts": {
+    "dev": "webpack",
+    "start": "electron ."
+  },
+  "author": "Alexandros Papadopoulos <zalkanor@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "twitch-m3u8": "^1.0.5",
+    "video.js": "^7.5.4",
+    "vue": "^2.0.1",
+    "zutre": "^0.1.3-alpha.8"
+  },
+  "devDependencies": {
+    "css-loader": "0.25.0",
+    "vue-style-loader": "^4.1.2",    
+    "electron": "^1.4.3",
+    "electron-reload": "^1.0.2",
+    "file-loader": "^0.9.0",
+    "less-loader": "5.0.0",
+    "style-loader": "0.23.1",
+    "vue-loader": "^9.5.1",
+    "webpack": "^2.1.0-beta.22"
+  }
+}
