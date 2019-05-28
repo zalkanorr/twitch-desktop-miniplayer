@@ -1,2 +1,2 @@
-# twitch-miniplayer
+# twitch-desktop-miniplayer
 WIP
