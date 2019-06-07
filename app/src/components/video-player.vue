@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <video ref="videoPlayer" height="180" width="430" class="video-js"></video>
+  <div style="height:100%; width:100%;">
+    <video ref="videoPlayer" :height="window.height" :width="window.width" class="video-js"></video>
     </div>
 </template>
 
@@ -19,18 +19,40 @@ export default {
     },
     data() {
         return {
-            player: null
+            player: null,
+            window: {
+                width: 0,
+                height: 0
+            }
         }
     },
     mounted() {
         this.player = videojs(this.$refs.videoPlayer, this.options, function onPlayerReady() {
             console.log('onPlayerReady', this);
-        })
+        });
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.handleResize);
     },
     beforeDestroy() {
         if (this.player) {
             this.player.dispose()
         }
+    },
+    methods: {
+        handleResize() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
     }
 }
+}
 </script>
+
+<style>
+#vjs_video_3 {
+    height: 100%;
+    width: 100%;
+}
+</style>
