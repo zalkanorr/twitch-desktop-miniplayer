@@ -10,6 +10,7 @@
   "author": "Alexandros Papadopoulos <zalkanor@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "jquery": "^3.4.1",
     "twitch-m3u8": "^1.0.5",
     "video.js": "^7.5.4",
     "vue": "^2.0.1",
@@ -18,7 +19,7 @@
   },
   "devDependencies": {
     "css-loader": "0.25.0",
-    "vue-style-loader": "^4.1.2",    
+    "vue-style-loader": "^4.1.2",
     "electron": "^1.4.3",
     "electron-reload": "^1.0.2",
     "file-loader": "^0.9.0",

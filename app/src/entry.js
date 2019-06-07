@@ -10,6 +10,8 @@ import App from './App.vue';
 import Home from './components/home.vue';
 import StreamWindow from './components/stream-window.vue';
 
+window.$ = require('jquery')
+window.JQuery = require('jquery')
 
 Vue.use(VueRouter);
 Vue.use(Zutre);
