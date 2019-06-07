@@ -12,12 +12,12 @@
 
 
 ## To-Do
-- Add tray functionality
-- Add config
-- Add settings UI
-- Add twitch auth
-- Add chat window
-- Add dist
+- [ ] Add tray functionality
+- [ ] Add config
+- [ ] Add settings UI
+- [ ] Add twitch auth
+- [ ] Add chat window
+- [ ] Add dist
 
 ## Getting started
 ``` bash
