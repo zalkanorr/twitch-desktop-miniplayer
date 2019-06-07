@@ -20,5 +20,19 @@ app.on('ready', () => {
 
 	ipcMain.on('streamWindowOpen', function (e, data) {
 		console.log('streamWindowOpen');
+		streamWindow = new BrowserWindow({width: 400, height: 200, toolbar: false, frame: false});
+		streamWindow.setAlwaysOnTop(true, "floating");
+		streamWindow.setVisibleOnAllWorkspaces(true);
+		streamWindow.setFullScreenable(false);
+		streamWindow.loadURL(`file://${__dirname}/app/index.html#/stream-window`);
+		stream_data = data;
+	});
+	ipcMain.on('streamWindowSendMeData', function (e, data) {
+		console.log('streamWindowSendMeData');
+		streamWindow.webContents.send('streamData', stream_data);
+	});
+	ipcMain.on('streamWindowClose', function (e, data) {
+		console.log('streamWindowClose');
+		streamWindow.close();
 	});
 })
