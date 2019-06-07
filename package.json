@@ -13,6 +13,7 @@
     "twitch-m3u8": "^1.0.5",
     "video.js": "^7.5.4",
     "vue": "^2.0.1",
+    "vue-router": "^3.0.6",
     "zutre": "^0.1.3-alpha.8"
   },
   "devDependencies": {
