@@ -7,22 +7,19 @@
 				:style="{opacity: actionButtonsOpacity}"
 				color="primary"
 				@click="close()"
-			>
-			close
-			</z-button>
+			>close</z-button>
 			<z-button id="drag-button" color="primary">drag</z-button>
 		</div>
 	</div>
 </template>
 
 <script>
-import VideoPlayer from "./video-player.vue";
-import { clearInterval } from "timers";
-var ipcRenderer = require("electron").ipcRenderer;
+import VideoPlayer from './video-player.vue';
+var ipcRenderer = require('electron').ipcRenderer;
 var opacity_interval = null;
 
 export default {
-	name: "App",
+	name: 'Stream Window',
 	data: () => ({
 		streamData: null,
 		videoOptions: {
@@ -30,8 +27,8 @@ export default {
 			controls: true,
 			sources: [
 				{
-					src: "stream_url",
-					type: "application/x-mpegURL"
+					src: 'stream_url',
+					type: 'application/x-mpegURL'
 				}
 			]
 		}
@@ -40,14 +37,15 @@ export default {
 		VideoPlayer
 	},
 	mounted() {
-		console.log("mounted");
+		console.log('mounted');
 		let self = this;
-		ipcRenderer.on("streamData", function(event, data) {
+		ipcRenderer.on('streamData', function(event, data) {
 			self.$data.streamData = data;
-			self.$data.videoOptions.sources[0].src = self.$data.streamData.selectedStream.url;
-			self.$data.videoOptions.sources[0].type = "application/x-mpegURL";
+			self.$data.videoOptions.sources[0].src =
+				self.$data.streamData.selectedStream.url;
+			self.$data.videoOptions.sources[0].type = 'application/x-mpegURL';
 		});
-		ipcRenderer.send("streamWindowSendMeData");
+		ipcRenderer.send('streamWindowSendMeData');
 
 		setInterval(() => {
 			this.checkControlBarActive();
@@ -55,22 +53,22 @@ export default {
 	},
 	methods: {
 		close() {
-			ipcRenderer.send("streamWindowClose");
+			ipcRenderer.send('streamWindowClose');
 		},
 		showActionButtons() {
-			if (!$("#action-buttons").hasClass("action-buttons-fadeIn")) {
-				$("#action-buttons").removeClass("action-buttons-fadeOut");
-				$("#action-buttons").addClass("action-buttons-fadeIn");
+			if (!$('#action-buttons').hasClass('action-buttons-fadeIn')) {
+				$('#action-buttons').removeClass('action-buttons-fadeOut');
+				$('#action-buttons').addClass('action-buttons-fadeIn');
 			}
 		},
 		hideActionButtons() {
-			if (!$("#action-buttons").hasClass("action-buttons-fadeOut")) {
-				$("#action-buttons").removeClass("action-buttons-fadeIn");
-				$("#action-buttons").addClass("action-buttons-fadeOut");
+			if (!$('#action-buttons').hasClass('action-buttons-fadeOut')) {
+				$('#action-buttons').removeClass('action-buttons-fadeIn');
+				$('#action-buttons').addClass('action-buttons-fadeOut');
 			}
 		},
 		checkControlBarActive() {
-			if ($("#vjs_video_3").hasClass("vjs-user-active")) {
+			if ($('#vjs_video_3').hasClass('vjs-user-active')) {
 				this.showActionButtons();
 			} else {
 				this.hideActionButtons();
