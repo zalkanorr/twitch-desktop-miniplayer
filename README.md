@@ -10,6 +10,7 @@
 * [twitch-m3u8](https://github.com/woafu/twitch-m3u8)
 * [video.js](https://videojs.com/)
 
+
 ## To-Do
 - Add tray functionality
 - Add config
@@ -17,6 +18,24 @@
 - Add twitch auth
 - Add chat window
 - Add dist
+
+## Getting started
+``` bash
+# clone the project
+git clone https://github.com/zalkanorr/twitch-desktop-miniplayer.git twitch-desktop-miniplayer
+
+# navigate to the project's directory
+cd twitch-desktop-miniplayer
+
+# install dependencies
+npm install
+
+# build the app for development
+npm run dev
+
+# start the app
+npm run start
+```
 
 ## Donations (Optional)
 - [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9FU7ZY6A4G6SY&source=url)
