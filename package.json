@@ -1,7 +1,7 @@
 {
   "name": "twitch-desktop-miniplayer",
   "version": "0.1.0",
-  "description": "A twitch miniplayer (browser window application) intended to use while gaming on a single monitor",
+  "description": "A twitch miniplayer (browser window application) intended to use while gaming or working on a single monitor",
   "main": "main.js",
   "scripts": {
     "dev": "webpack",
