@@ -33,12 +33,10 @@ export default {
 	},
 	mounted() {
 		console.log('mounted');
-		let self = this;
-		ipcRenderer.on('streamData', function(event, data) {
-			self.$data.streamData = data;
-			self.$data.videoOptions.sources[0].src =
-				self.$data.streamData.selectedStream.url;
-			self.$data.videoOptions.sources[0].type = 'application/x-mpegURL';
+		ipcRenderer.on('streamData', (event, data) => {
+			this.$data.streamData = data;
+			this.$data.videoOptions.sources[0].src = this.$data.streamData.selectedStream.url;
+			this.$data.videoOptions.sources[0].type = 'application/x-mpegURL';
 		});
 		ipcRenderer.send('streamWindowSendMeData');
 
@@ -52,14 +50,16 @@ export default {
 		},
 		showActionButtons() {
 			if (!$('#action-buttons').hasClass('action-buttons-fadeIn')) {
-				$('#action-buttons').removeClass('action-buttons-fadeOut');
-				$('#action-buttons').addClass('action-buttons-fadeIn');
+				$('#action-buttons')
+					.removeClass('action-buttons-fadeOut')
+					.addClass('action-buttons-fadeIn');
 			}
 		},
 		hideActionButtons() {
 			if (!$('#action-buttons').hasClass('action-buttons-fadeOut')) {
-				$('#action-buttons').removeClass('action-buttons-fadeIn');
-				$('#action-buttons').addClass('action-buttons-fadeOut');
+				$('#action-buttons')
+					.removeClass('action-buttons-fadeIn')
+					.addClass('action-buttons-fadeOut');
 			}
 		},
 		checkControlBarActive() {
