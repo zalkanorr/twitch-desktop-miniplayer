@@ -1,43 +1,39 @@
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 module.exports = {
-
-    watch: true,
-
-    target: 'electron',
-
-    entry: './app/src/entry.js',
-
-    output: {
-        path: __dirname + '/app/build',
-        publicPath: 'build/',
-        filename: 'bundle.js'
-    },
-
-    module: {
-        loaders: [
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                query: {
-                    name: '[name].[ext]?[hash]'
-                }
-            },
-            {
-                test: /\.(css)$/,
-                use: [{
-                    loader: "style-loader" // creates style nodes from JS strings
-                }, {
-                    loader: "css-loader" // translates CSS into CommonJS
-                }]
-            }
-        ]
-    },
-
-    resolve: {
-        alias: {vue: 'vue/dist/vue.js'}
+  watch: true,
+  target: 'electron-renderer',
+  mode: 'development',
+  entry: './app/src/entry.js',
+  output: {
+    path: __dirname + '/app/build',
+    publicPath: 'build/',
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        use: 'vue-loader'
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: 'file-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
+  },
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.runtime.esm.js'
     }
-
-}
+  },
+  plugins: [new VueLoaderPlugin()]
+};
