@@ -1,9 +1,8 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-  watch: true,
   target: 'electron-renderer',
-  mode: 'development',
+  mode: 'production',
   entry: './app/src/entry.js',
   output: {
     path: __dirname + '/app/build',

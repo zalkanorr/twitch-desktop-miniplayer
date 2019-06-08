@@ -4,8 +4,9 @@
   "description": "A twitch miniplayer (browser window application) intended to use while gaming or working on a single monitor",
   "main": "main.js",
   "scripts": {
-    "dev": "webpack",
-    "start": "electron ."
+	  "start": "electron .",
+	  "build": "webpack",
+	  "build:dev": "webpack -w --mode=development"
   },
   "author": "Alexandros Papadopoulos <zalkanorr@gmail.com>",
   "license": "MIT",
