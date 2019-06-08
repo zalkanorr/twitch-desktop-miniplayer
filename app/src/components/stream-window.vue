@@ -74,7 +74,8 @@ export default {
 	}
 };
 </script>
-<style>
+
+<style scoped>
 #drag-button {
 	-webkit-app-region: drag;
 	position: absolute;
