@@ -12,8 +12,11 @@ var stream_data = null;
 app.on('ready', () => {
   let mainWindow = new BrowserWindow({
     width: 800,
-    height: 600
-  });
+    height: 600,
+	webPreferences: {
+		nodeIntegration: true
+	}  
+});
 
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
 
@@ -23,7 +26,10 @@ app.on('ready', () => {
       width: 400,
       height: 200,
       toolbar: false,
-      frame: false
+	  frame: false,
+	  webPreferences: {
+		nodeIntegration: true
+	  }
     });
     streamWindow.setAlwaysOnTop(true, 'floating');
     streamWindow.setVisibleOnAllWorkspaces(true);
