@@ -10,6 +10,11 @@
   "author": "Alexandros Papadopoulos <zalkanorr@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2",
+    "@fortawesome/free-solid-svg-icons": "^5.9",
+    "@fortawesome/vue-fontawesome": "^0.1",
+    "bootstrap": "^4.3",
+    "bootstrap-vue": "^2.0",
     "jquery": "^3.4",
     "twitch-m3u8": "^1.0",
     "video.js": "^7.5",

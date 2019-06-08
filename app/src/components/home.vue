@@ -1,31 +1,52 @@
 <template>
 	<div style="padding:10%;">
-		<h1>Twitch Desktop Miniplayer</h1>
+		<h1 style="color:white;">Twitch Desktop Miniplayer</h1>
 
 		<form @submit.prevent="setStreamer">
-			<z-input v-model="inputUrlOrStreamer" label="Twitch Url Or Streamer Name"/>
-			<z-button color="primary" type="submit">Set</z-button>
+			<b-input-group class="mt-3">
+				<b-input-group-prepend>
+					<b-button
+						style="background-color:unset; border-right:unset; border-right: unset; border-color: #4e3380;"
+						disabled
+					>
+						<font-awesome-icon icon="search"/>
+					</b-button>
+				</b-input-group-prepend>
+				<b-input
+					class="b-purple-input"
+					v-model="inputUrlOrStreamer"
+					placeholder="Search streamer with Name or URL"
+				/>
+				<b-input-group-append>
+					<b-button class="b-purple-primary" type="submit">Search</b-button>
+				</b-input-group-append>
+			</b-input-group>
 		</form>
 
 		<div v-if="selectedStreamer && streamData">
 			<br>
-			<h5>Pick Quality:</h5>
-			<z-button
+			<h5 style="color:white;">Pick Quality:</h5>
+			<b-button
+				class="b-purple-secondary"
 				v-for="stream_data in streamData"
 				:key="stream_data.quality"
 				@click="selectStream(stream_data)"
 				:class="{active: selectedStream && stream_data == selectedStream ? true : false}"
-			>{{stream_data.quality}}</z-button>
+			>{{stream_data.quality}}</b-button>
 		</div>
 
 		<br>
-		<z-button color="primary" v-if="selectedStreamer && selectedStream" @click="playStream">Play</z-button>
+		<b-button
+			class="b-purple-primary"
+			v-if="selectedStreamer && selectedStream"
+			@click="playStream"
+		>Play</b-button>
 	</div>
 </template>
 
 <script>
 import VideoPlayer from './video-player.vue';
-var ipcRenderer = require('electron').ipcRenderer;
+import { ipcRenderer } from 'electron';
 
 const twitch = require('twitch-m3u8')('1a6wn2y0bpzxsr5senaoz7llfpyvgc');
 
@@ -120,6 +141,7 @@ body {
 	justify-content: center;
 	height: 100%;
 	margin: auto;
+	background-color: #0f0e11;
 }
 body > div {
 	height: 100%;

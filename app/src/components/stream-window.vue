@@ -2,13 +2,8 @@
 	<div style="height:100%; width:100%;">
 		<video-player v-if="streamData" :options="videoOptions"/>
 		<div id="action-buttons">
-			<z-button
-				id="close-button"
-				:style="{opacity: actionButtonsOpacity}"
-				color="primary"
-				@click="close()"
-			>close</z-button>
-			<z-button id="drag-button" color="primary">drag</z-button>
+			<b-button class="b-purple-primary" id="close-button" @click="close()">close</b-button>
+			<b-button class="b-purple-primary" id="drag-button">drag</b-button>
 		</div>
 	</div>
 </template>
@@ -19,7 +14,7 @@ var ipcRenderer = require('electron').ipcRenderer;
 var opacity_interval = null;
 
 export default {
-	name: 'Stream Window',
+	name: 'stream-window',
 	data: () => ({
 		streamData: null,
 		videoOptions: {
