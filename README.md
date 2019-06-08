@@ -30,8 +30,8 @@ cd twitch-desktop-miniplayer
 # install dependencies
 npm install
 
-# build the app for development
-npm run dev
+# build the app
+npm run build
 
 # start the app
 npm run start
