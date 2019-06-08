@@ -130,25 +130,3 @@ export default {
 	}
 };
 </script>
-
-<style>
-html {
-	height: 100%;
-}
-body {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-	margin: auto;
-	background-color: #0f0e11;
-}
-body > div {
-	height: 100%;
-	width: 100%;
-}
-.logo {
-	width: auto;
-	height: 100px;
-}
-</style>
