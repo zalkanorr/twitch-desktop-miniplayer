@@ -6,7 +6,7 @@
 ## Built With
 * [electron](https://electronjs.org/)
 * [vue](https://vuejs.org/)
-* [zutre](https://maclisowski.github.io/zutre/#/)
+* [bootstrap-vue](https://bootstrap-vue.js.org/)
 * [twitch-m3u8](https://github.com/woafu/twitch-m3u8)
 * [video.js](https://videojs.com/)
 
