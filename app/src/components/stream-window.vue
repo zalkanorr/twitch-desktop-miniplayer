@@ -11,7 +11,6 @@
 <script>
 import VideoPlayer from './video-player.vue';
 var ipcRenderer = require('electron').ipcRenderer;
-var opacity_interval = null;
 
 export default {
 	name: 'stream-window',
