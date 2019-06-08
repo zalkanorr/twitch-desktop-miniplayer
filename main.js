@@ -6,14 +6,14 @@ const { ipcMain, app, BrowserWindow } = electron;
 require('electron-reload')(__dirname);
 
 // The main interface window
-let mainWindow = null;
+var mainWindow = null;
 // The window that contains the stream player
 var streamWindow = null;
 // The data that will be passed to the streamWindow
 var stream_data = null;
 
 app.on('ready', () => {
-  let mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
