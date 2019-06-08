@@ -8,14 +8,9 @@
 import videojs from 'video.js';
 
 export default {
-	name: 'Video Player',
+	name: 'video-player',
 	props: {
-		options: {
-			type: Object,
-			default() {
-				return {};
-			}
-		}
+		options: {}
 	},
 	data() {
 		return {
@@ -32,6 +27,7 @@ export default {
 			this.options,
 			function onPlayerReady() {
 				console.log('onPlayerReady', this);
+				this.tech_.off('dblclick');
 			}
 		);
 		window.addEventListener('resize', this.handleResize);
@@ -58,5 +54,8 @@ export default {
 #vjs_video_3 {
 	height: 100%;
 	width: 100%;
+}
+.video-js.vjs-playing .vjs-tech {
+	pointer-events: none;
 }
 </style>
