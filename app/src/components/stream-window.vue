@@ -20,6 +20,9 @@ export default {
 		videoOptions: {
 			autoplay: true,
 			controls: true,
+			controlBar: {
+				fullscreenToggle: false
+			},
 			sources: [
 				{
 					src: 'stream_url',
