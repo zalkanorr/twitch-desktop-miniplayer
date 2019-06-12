@@ -18,7 +18,8 @@ app.on('ready', () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    sandbox: true
   });
 
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
@@ -34,7 +35,8 @@ app.on('ready', () => {
       frame: false,
       webPreferences: {
         nodeIntegration: true
-      }
+      },
+      sandbox: true
     });
 
     // Forcing the window to be ontop
