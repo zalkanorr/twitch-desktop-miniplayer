@@ -28,8 +28,8 @@ app.on('ready', () => {
   ipcMain.on('streamWindowOpen', function(e, data) {
     console.log('streamWindowOpen');
     streamWindow = new BrowserWindow({
-      width: 400,
-      height: 200,
+      width: 384,
+      height: 216,
       toolbar: false,
       frame: false,
       webPreferences: {
