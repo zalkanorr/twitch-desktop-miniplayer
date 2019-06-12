@@ -13,6 +13,10 @@ var streamWindow = null;
 var stream_data = null;
 // The path of the app's icon
 var icon_path = './app/src/assets/icon.png';
+// The tray variable
+var tray = null;
+// The tray menu variable
+var tray_context_menu = null;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
@@ -77,8 +81,8 @@ app.on('ready', () => {
   });
 
   function initializeTray() {
-    const tray = new Tray(icon_path);
-    var tray_context_menu = Menu.buildFromTemplate([
+    tray = new Tray(icon_path);
+    tray_context_menu = Menu.buildFromTemplate([
       {
         label: 'Open menu',
         click: function() {
