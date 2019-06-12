@@ -77,7 +77,9 @@ app.on('ready', () => {
     // Close stream window
     streamWindow.close();
     // Make tray menu item not visible
-    tray_context_menu.getMenuItemById('close-stream').visible = false;
+	tray_context_menu.getMenuItemById('close-stream').visible = false;
+    // Send Stop Playing event at main window
+	mainWindow.webContents.send('stopPlaying');
   });
 
   function initializeTray() {

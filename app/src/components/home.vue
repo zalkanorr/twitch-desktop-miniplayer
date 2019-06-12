@@ -40,7 +40,11 @@
 			class="b-purple-primary"
 			v-if="selectedStreamer && selectedStream"
 			@click="playStream"
-		>Play</b-button>
+			:disabled="this.$data.streamIsPlaying"
+		>
+		<div v-if="!this.$data.streamIsPlaying">Play</div>
+		<div v-else>Playing</div>
+		</b-button>
 	</div>
 </template>
 
@@ -66,20 +70,29 @@ export default {
 			]
 		},
 		selectedStreamer: null,
-		inputUrlOrStreamer: 'https://www.twitch.tv/summit1g'
+		inputUrlOrStreamer: 'https://www.twitch.tv/summit1g',
+		streamIsPlaying: false
 	}),
 	components: {
 		VideoPlayer
 	},
+	mounted() {
+		ipcRenderer.on('stopPlaying', (event, data) => {
+			this.$data.streamIsPlaying = false;
+		});
+	},
 	methods: {
 		playStream: function() {
 			console.log('playStream()');
+			if (!this.$data.streamIsPlaying) {
 			if (this.$data.selectedStream) {
 				this.$data.videoOptions.sources[0].src = this.$data.selectedStream.url;
 				this.$data.videoOptions.sources[0].type =
 					'application/x-mpegURL';
 			}
 			ipcRenderer.send('streamWindowOpen', this.$data);
+				this.$data.streamIsPlaying = true;
+			}
 		},
 		setStreamer: function() {
 			if (this.$data.inputUrlOrStreamer) {
