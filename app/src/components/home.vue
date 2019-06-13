@@ -25,7 +25,13 @@
 
 		<div v-if="selectedStreamer && streamData">
 			<br>
-			<h5 style="color:white;">Pick Quality:</h5>
+			<div v-if="streamInfo" style="color:white;">
+				<h5>{{streamInfo.name}}</h5>
+				<h6>Category: {{streamInfo.category}}</h6>
+				<h6>Viewers: {{streamInfo.viewers}}</h6>
+			</div>
+			<br>
+			<h6 style="color:white;">Pick Quality:</h6>
 			<b-button
 				class="b-purple-secondary"
 				v-for="stream_data in streamData"
@@ -51,8 +57,9 @@
 <script>
 import VideoPlayer from './video-player.vue';
 import { ipcRenderer } from 'electron';
-
-const twitch = require('twitch-m3u8')('1a6wn2y0bpzxsr5senaoz7llfpyvgc');
+const twitch_client_id = '1a6wn2y0bpzxsr5senaoz7llfpyvgc';
+const twitch = require('twitch-m3u8')(twitch_client_id);
+const axios = require('axios');
 
 export default {
 	name: 'home',
@@ -71,7 +78,8 @@ export default {
 		},
 		selectedStreamer: null,
 		inputUrlOrStreamer: 'https://www.twitch.tv/summit1g',
-		streamIsPlaying: false
+		streamIsPlaying: false,
+		streamInfo: null
 	}),
 	components: {
 		VideoPlayer
@@ -85,12 +93,12 @@ export default {
 		playStream: function() {
 			console.log('playStream()');
 			if (!this.$data.streamIsPlaying) {
-			if (this.$data.selectedStream) {
-				this.$data.videoOptions.sources[0].src = this.$data.selectedStream.url;
-				this.$data.videoOptions.sources[0].type =
-					'application/x-mpegURL';
-			}
-			ipcRenderer.send('streamWindowOpen', this.$data);
+				if (this.$data.selectedStream) {
+					this.$data.videoOptions.sources[0].src = this.$data.selectedStream.url;
+					this.$data.videoOptions.sources[0].type =
+						'application/x-mpegURL';
+				}
+				ipcRenderer.send('streamWindowOpen', this.$data);
 				this.$data.streamIsPlaying = true;
 			}
 		},
@@ -126,15 +134,38 @@ export default {
 					.getStream(this.$data.selectedStreamer)
 					.then(stream_data => {
 						console.log('getStreams()->available qualities:');
-						stream_data.forEach(element => {
+						stream_data.forEach(function (element, index) {
 							console.log(`getStreams()-> ${element.quality}`);
+							if (element && element.quality == 'audio_only') stream_data.splice(index,1);
 						});
 						this.$data.streamData = stream_data;
+						this.getAndSetStreamInfo();
 					})
 					.catch(err => console.error(err));
 			} else {
 				console.log('getStreams()->There is not a selected streamer');
 			}
+		},
+		getAndSetStreamInfo: function() {
+			console.log('getAndSetStreamInfo()');
+			axios.get('https://api.twitch.tv/kraken/streams/' + this.$data.selectedStreamer, {
+				headers: { 'Client-ID': twitch_client_id }
+			})
+			.then((res) => {
+				// If stream is online
+				if (res.data.stream) {
+					let display_name = res.data.stream.channel.display_name;
+					let stream_category = res.data.stream.game;
+					let stream_viewers = res.data.stream.viewers;
+					let stream_preview = res.data.stream.preview.medium;
+					this.$data.streamInfo = {name: display_name, category: stream_category, viewers: stream_viewers};
+				} else {
+					this.$data.streamInfo = null;
+				}
+			})
+			.catch((error) => {
+				console.error(error)
+			})
 		},
 		selectStream: function(stream_data) {
 			console.log('selectStream()');

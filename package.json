@@ -4,9 +4,9 @@
   "description": "A twitch miniplayer (browser window application) intended to use while gaming or working on a single monitor",
   "main": "main.js",
   "scripts": {
-	  "start": "electron .",
-	  "build": "webpack",
-	  "build:dev": "webpack -w --mode=development"
+    "start": "electron .",
+    "build": "webpack",
+    "build:dev": "webpack -w --mode=development"
   },
   "author": "Alexandros Papadopoulos <zalkanorr@gmail.com>",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/vue-fontawesome": "^0.1.6",
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.22",
     "jquery": "^3.4.1",
