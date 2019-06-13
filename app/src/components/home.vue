@@ -35,7 +35,7 @@
 					<h5>
 						{{streamInfo.name}}
 						<b-button class="b-purple-primary" size="sm" type="submit" @click="toggleFavouriteStreamer()">
-							<div v-if="!this.$data.selectedStreamerIsFavourite">Unfavourite</div>
+							<div v-if="this.$data.selectedStreamerIsFavourite">Unfavourite</div>
 							<div v-else>Favourite</div>
 						</b-button>
 					</h5>
@@ -140,6 +140,7 @@ export default {
 					console.log('setStreamer()->Considered name');
 					this.$data.selectedStreamer = this.$data.inputUrlOrStreamer;
 					this.getStreams();
+					this.setIsFavouriteStreamer();
 				}
 			}
 		},
@@ -191,9 +192,9 @@ export default {
 		},
 		setIsFavouriteStreamer: function() {
 			if (db_lib.isFavouriteStreamer(this.$data.selectedStreamer)) {
-				this.$data.selectedStreamerIsFavourite = false;
-			} else {
 				this.$data.selectedStreamerIsFavourite = true;
+			} else {
+				this.$data.selectedStreamerIsFavourite = false;
 			}
 		},
 		toggleFavouriteStreamer: function() {
