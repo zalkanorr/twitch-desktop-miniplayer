@@ -1,7 +1,7 @@
 // Basic init
 const electron = require('electron');
 const { app, BrowserWindow, ipcMain, Tray, Menu } = electron;
-
+const path = require('path');
 
 // The main interface window
 var mainWindow = null;
@@ -10,7 +10,7 @@ var streamWindow = null;
 // The data that will be passed to the streamWindow
 var stream_data = null;
 // The path of the app's icon
-var icon_path = './app/src/assets/icon.png';
+var icon_path = path.join(__dirname, 'icon.png');
 // The tray variable
 var tray = null;
 // The tray menu variable
