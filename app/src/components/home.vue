@@ -14,10 +14,14 @@
 							<font-awesome-icon icon="search"/>
 						</b-button>
 					</b-input-group-prepend>
-					<b-input
-						class="b-purple-input"
+					<vue-bootstrap-typeahead
 						v-model="inputUrlOrStreamer"
 						placeholder="Search streamer with Name or URL"
+						class="b-purple-input"
+						style="width:75%"
+						:data="getFavouriteStreamers()"
+						backgroundVariant="dark"
+						textVariant="white"
 					/>
 					<b-input-group-append>
 						<b-button class="b-purple-primary" type="submit">Search</b-button>
@@ -28,7 +32,13 @@
 			<div v-if="selectedStreamer && streamData">
 				<br>
 				<div v-if="streamInfo" style="color:white;">
-					<h5>{{streamInfo.name}}</h5>
+					<h5>
+						{{streamInfo.name}}
+						<b-button class="b-purple-primary" size="sm" type="submit" @click="toggleFavouriteStreamer()">
+							<div v-if="!this.$data.selectedStreamerIsFavourite">Unfavourite</div>
+							<div v-else>Favourite</div>
+						</b-button>
+					</h5>
 					<h6>Category: {{streamInfo.category}}</h6>
 					<h6>Viewers: {{streamInfo.viewers}}</h6>
 				</div>
@@ -58,11 +68,13 @@
 </template>
 
 <script>
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import VideoPlayer from './video-player.vue';
 import { ipcRenderer } from 'electron';
 const config = require('../../../config.json');
 const twitch = require('twitch-m3u8')(config.twitch_client_id);
 const twitch_api_lib = require('../../../libs/twitch_api_lib');
+const db_lib = require('../../../libs/db_lib');
 
 export default {
 	name: 'home',
@@ -80,14 +92,17 @@ export default {
 			]
 		},
 		selectedStreamer: null,
-		inputUrlOrStreamer: 'https://www.twitch.tv/summit1g',
+		inputUrlOrStreamer: 'https://www.twitch.tv/reckful',
 		streamIsPlaying: false,
-		streamInfo: null
+		streamInfo: null,
+		selectedStreamerIsFavourite: false
 	}),
 	components: {
-		VideoPlayer
+		VideoPlayer,
+		VueBootstrapTypeahead
 	},
 	mounted() {
+		db_lib.initialize();
 		ipcRenderer.on('stopPlaying', (event, data) => {
 			this.$data.streamIsPlaying = false;
 		});
@@ -98,8 +113,7 @@ export default {
 			if (!this.$data.streamIsPlaying) {
 				if (this.$data.selectedStream) {
 					this.$data.videoOptions.sources[0].src = this.$data.selectedStream.url;
-					this.$data.videoOptions.sources[0].type =
-						'application/x-mpegURL';
+					this.$data.videoOptions.sources[0].type = 'application/x-mpegURL';
 				}
 				ipcRenderer.send('streamWindowOpen', this.$data);
 				this.$data.streamIsPlaying = true;
@@ -115,10 +129,9 @@ export default {
 						if (name_from_link) {
 							this.$data.selectedStreamer = name_from_link;
 							this.getStreams();
+							this.setIsFavouriteStreamer();
 						} else {
-							console.log(
-								'setStreamer()->name_from_link not valid'
-							);
+							console.log('setStreamer()->name_from_link not valid');
 						}
 					} else {
 						console.log('setStreamer()->Link is not valid');
@@ -139,8 +152,7 @@ export default {
 						console.log('getStreams()->available qualities:');
 						stream_data.forEach(function(element, index) {
 							console.log(`getStreams()-> ${element.quality}`);
-							if (element && element.quality == 'audio_only')
-								stream_data.splice(index, 1);
+							if (element && element.quality == 'audio_only') stream_data.splice(index, 1);
 						});
 						this.$data.streamData = stream_data;
 						this.getStreamInfo();
@@ -174,11 +186,26 @@ export default {
 			this.$data.selectedStream = stream_data;
 		},
 		setBackgroundImage: function() {
-			$('.background_image').css(
-				'background-image',
-				`url(${this.$data.streamInfo.preview})`
-			);
+			$('.background_image').css('background-image', `url(${this.$data.streamInfo.preview})`);
 			$('.background_image').css('opacity', 0.3);
+		},
+		setIsFavouriteStreamer: function() {
+			if (db_lib.isFavouriteStreamer(this.$data.selectedStreamer)) {
+				this.$data.selectedStreamerIsFavourite = false;
+			} else {
+				this.$data.selectedStreamerIsFavourite = true;
+			}
+		},
+		toggleFavouriteStreamer: function() {
+			if (db_lib.isFavouriteStreamer(this.$data.selectedStreamer)) {
+				db_lib.removeStreamerFromFavourites(this.$data.selectedStreamer);
+			} else {
+				db_lib.addStreamerToFavourites(this.$data.selectedStreamer);
+			}
+			this.setIsFavouriteStreamer();
+		},
+		getFavouriteStreamers: function() {
+			return db_lib.getFavouriteStreamers();
 		}
 	}
 };

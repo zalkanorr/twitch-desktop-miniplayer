@@ -72,15 +72,26 @@ body > div {
 	box-shadow: 0 0 5px #6441a4 !important;
 }
 
-.b-purple-input {
-	background: #0f0e11;
-    background-clip: padding-box;
-    border: 1px solid #392e5c;
-	color: #faf9fa;
-	border-left: unset;
+.b-purple-input, .b-purple-input > .input-group > .form-control {
+	background: #0f0e11 !important;
+    background-clip: padding-box !important;
+    border: 1px solid #392e5c !important;
+	color: #faf9fa !important;
+	border-left: unset !important;
+	border-radius: 0px;
 }
 
-.b-purple-input:focus, .b-purple-input:active {
+.list-group-item-action {
+	background: #0f0e11 !important;
+    background-clip: padding-box !important;
+    border: 1px solid #392e5c !important;
+	color: #faf9fa !important;
+}
+
+.b-purple-input:focus, .b-purple-input:active,
+.b-purple-input > .input-group > .form-control:focus,
+.b-purple-input > .input-group > .form-control:active,
+.list-group-item-action:active  {
 	background: #0f0e11 !important;
     background-clip: padding-box !important;
     border: 1px solid #6441a4 !important;
