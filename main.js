@@ -40,6 +40,7 @@ app.on('ready', () => {
 	ipcMain.on('streamWindowOpen', function (e, data) {
 		console.log('streamWindowOpen');
 		streamWindow = new BrowserWindow({
+			icon: icon_path,
 			width: 384,
 			height: 216,
 			toolbar: false,
