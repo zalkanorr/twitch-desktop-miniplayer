@@ -3,7 +3,7 @@ const electron = require('electron');
 const { ipcMain, app, BrowserWindow, Tray, Menu } = electron;
 
 // Let electron reloads by itself when webpack watches changes in ./app/
-require('electron-reload')(__dirname);
+require('electron-reload')(`${__dirname}/app/build`);
 
 // The main interface window
 var mainWindow = null;
@@ -77,9 +77,9 @@ app.on('ready', () => {
     // Close stream window
     streamWindow.close();
     // Make tray menu item not visible
-	tray_context_menu.getMenuItemById('close-stream').visible = false;
+    tray_context_menu.getMenuItemById('close-stream').visible = false;
     // Send Stop Playing event at main window
-	mainWindow.webContents.send('stopPlaying');
+    mainWindow.webContents.send('stopPlaying');
   });
 
   function initializeTray() {
