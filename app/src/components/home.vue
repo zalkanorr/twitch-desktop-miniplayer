@@ -48,8 +48,8 @@
 			@click="playStream"
 			:disabled="this.$data.streamIsPlaying"
 		>
-		<div v-if="!this.$data.streamIsPlaying">Play</div>
-		<div v-else>Playing</div>
+			<div v-if="!this.$data.streamIsPlaying">Play</div>
+			<div v-else>Playing</div>
 		</b-button>
 	</div>
 </template>
@@ -134,9 +134,10 @@ export default {
 					.getStream(this.$data.selectedStreamer)
 					.then(stream_data => {
 						console.log('getStreams()->available qualities:');
-						stream_data.forEach(function (element, index) {
+						stream_data.forEach(function(element, index) {
 							console.log(`getStreams()-> ${element.quality}`);
-							if (element && element.quality == 'audio_only') stream_data.splice(index,1);
+							if (element && element.quality == 'audio_only')
+								stream_data.splice(index, 1);
 						});
 						this.$data.streamData = stream_data;
 						this.getAndSetStreamInfo();
@@ -148,24 +149,33 @@ export default {
 		},
 		getAndSetStreamInfo: function() {
 			console.log('getAndSetStreamInfo()');
-			axios.get('https://api.twitch.tv/kraken/streams/' + this.$data.selectedStreamer, {
-				headers: { 'Client-ID': twitch_client_id }
-			})
-			.then((res) => {
-				// If stream is online
-				if (res.data.stream) {
-					let display_name = res.data.stream.channel.display_name;
-					let stream_category = res.data.stream.game;
-					let stream_viewers = res.data.stream.viewers;
-					let stream_preview = res.data.stream.preview.medium;
-					this.$data.streamInfo = {name: display_name, category: stream_category, viewers: stream_viewers};
-				} else {
-					this.$data.streamInfo = null;
-				}
-			})
-			.catch((error) => {
-				console.error(error)
-			})
+			axios
+				.get(
+					'https://api.twitch.tv/kraken/streams/' +
+						this.$data.selectedStreamer,
+					{
+						headers: { 'Client-ID': twitch_client_id }
+					}
+				)
+				.then(res => {
+					// If stream is online
+					if (res.data.stream) {
+						let display_name = res.data.stream.channel.display_name;
+						let stream_category = res.data.stream.game;
+						let stream_viewers = res.data.stream.viewers;
+						let stream_preview = res.data.stream.preview.medium;
+						this.$data.streamInfo = {
+							name: display_name,
+							category: stream_category,
+							viewers: stream_viewers
+						};
+					} else {
+						this.$data.streamInfo = null;
+					}
+				})
+				.catch(error => {
+					console.error(error);
+				});
 		},
 		selectStream: function(stream_data) {
 			console.log('selectStream()');
