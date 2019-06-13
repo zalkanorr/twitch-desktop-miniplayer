@@ -27,24 +27,24 @@ Vue.use(BootstrapVue);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const router = new VueRouter({
-  routes: [
-    {
-      path: '/',
-      component: Home
-    },
-    {
-      path: '/home',
-      component: Home
-    },
-    {
-      path: '/stream-window',
-      component: StreamWindow
-    }
-  ]
+	routes: [
+		{
+			path: '/',
+			component: Home
+		},
+		{
+			path: '/home',
+			component: Home
+		},
+		{
+			path: '/stream-window',
+			component: StreamWindow
+		}
+	]
 });
 
 new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
+	el: '#app',
+	router,
+	render: h => h(App)
 });

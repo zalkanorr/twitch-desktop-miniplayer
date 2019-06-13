@@ -22,14 +22,10 @@ export default {
 		};
 	},
 	mounted() {
-		this.player = videojs(
-			this.$refs.videoPlayer,
-			this.options,
-			function onPlayerReady() {
-				console.log('onPlayerReady', this);
-				this.tech_.off('dblclick');
-			}
-		);
+		this.player = videojs(this.$refs.videoPlayer, this.options, function onPlayerReady() {
+			console.log('onPlayerReady', this);
+			this.tech_.off('dblclick');
+		});
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
 	},
