@@ -2,10 +2,6 @@
 const electron = require('electron');
 const { ipcMain, app, BrowserWindow, Tray, Menu } = electron;
 
-// Let electron reloads by itself when webpack watches changes in ./app/
-require('electron-reload')(`${__dirname}/app/build`, {
-	electron: './node_modules/electron'
-});
 
 // The main interface window
 var mainWindow = null;
