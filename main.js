@@ -1,6 +1,6 @@
 // Basic init
 const electron = require('electron');
-const { ipcMain, app, BrowserWindow, Tray, Menu } = electron;
+const { app, BrowserWindow, ipcMain, Tray, Menu } = electron;
 
 
 // The main interface window
@@ -23,11 +23,10 @@ app.on('ready', () => {
 		height: 600,
 		webPreferences: {
 			nodeIntegration: true
-		},
-		sandbox: true
+		}
 	});
 
-	mainWindow.loadURL(`file://${__dirname}/app/index.html`);
+	mainWindow.loadURL(`file://${__dirname}/index.html`);
 
 	initializeTray();
 
@@ -43,8 +42,7 @@ app.on('ready', () => {
 			frame: false,
 			webPreferences: {
 				nodeIntegration: true
-			},
-			sandbox: true
+			}
 		});
 
 		// Forcing the window to be ontop
@@ -52,7 +50,7 @@ app.on('ready', () => {
 		streamWindow.setVisibleOnAllWorkspaces(true);
 		streamWindow.setFullScreenable(false);
 
-		streamWindow.loadURL(`file://${__dirname}/app/index.html#/stream-window`);
+		streamWindow.loadURL(`file://${__dirname}/index.html#/stream-window`);
 
 		// Store data
 		stream_data = data;

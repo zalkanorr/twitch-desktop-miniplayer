@@ -2,11 +2,19 @@
   "name": "twitch-desktop-miniplayer",
   "version": "0.1.0",
   "description": "A twitch miniplayer (browser window application) intended to use while gaming or working on a single monitor",
-  "main": "main.js",
+  "main": "app/build/main.js",
   "scripts": {
-    "start": "electron .",
-    "build": "webpack",
-    "build:dev": "webpack -w --mode=development"
+    "start": "electron app/build/main.js",
+    "build:all": "npm run build:render",
+    "prebuild:all": "npm run build:main",
+    "build:all:dev": "npm run build:render:dev",
+    "prebuild:all:dev": "npm run build:main:dev",
+    "build:main": "webpack --config webpack/main/production.js",
+    "build:main:dev": "webpack --config webpack/main/development.js",
+    "build:render": "webpack --config webpack/renderer/production.js",
+    "build:render:dev": "webpack --watch --config webpack/renderer/development.js",
+    "dist": "build",
+    "predist": "npm run build:all"
   },
   "author": "Alexandros Papadopoulos <zalkanorr@gmail.com>",
   "license": "MIT",
@@ -17,6 +25,7 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.22",
+    "electron": "^5.0.3",
     "jquery": "^3.4.1",
     "lowdb": "^1.0.0",
     "twitch-m3u8": "^1.0.5",
@@ -28,22 +37,38 @@
   "devDependencies": {
     "aws-sdk": "^2.471.0",
     "css-loader": "^2.1.1",
-    "electron": "^5.0.3",
-    "electron-reload": "^1.4.0",
+	"electron-builder": "^20.43.0",
     "file-loader": "^4.0.0",
     "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.7.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3"
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.3",
+	"webpack-merge": "^4.2.1",
+	"babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.3",
+    "html-webpack-plugin": "^3.2.0",
+    "url-loader": "^2.0.0",
+	"node-sass": "^4.12.0",
+    "@babel/core": "^7.4.5"	
   },
   "prettier": {
     "singleQuote": true,
     "printWidth": 250,
     "useTabs": true,
-	"tabWidth": 4
+    "tabWidth": 4
+  },
+  "build": {
+    "appId": "zalkanorr.twitch-desktop-miniplayer",
+    "productName": "Twitch Desktop Miniplayer",
+    "files": [
+      "app/build",
+      "src/assets"
+    ]
   }
 }

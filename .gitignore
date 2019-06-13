@@ -41,3 +41,6 @@ app/build
 
 # db
 db.json
+
+# dist
+dist
