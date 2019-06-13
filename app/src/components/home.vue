@@ -1,56 +1,59 @@
 <template>
-	<div style="padding:10%;">
-		<h1 style="color:white;">Twitch Desktop Miniplayer</h1>
+	<div>
+		<div class="background_image"></div>
+		<div style="padding:10%;">
+			<h1 style="color:white;">Twitch Desktop Miniplayer</h1>
 
-		<form @submit.prevent="setStreamer">
-			<b-input-group class="mt-3">
-				<b-input-group-prepend>
-					<b-button
-						style="background-color:unset; border-right:unset; border-right: unset; border-color: #4e3380;"
-						disabled
-					>
-						<font-awesome-icon icon="search"/>
-					</b-button>
-				</b-input-group-prepend>
-				<b-input
-					class="b-purple-input"
-					v-model="inputUrlOrStreamer"
-					placeholder="Search streamer with Name or URL"
-				/>
-				<b-input-group-append>
-					<b-button class="b-purple-primary" type="submit">Search</b-button>
-				</b-input-group-append>
-			</b-input-group>
-		</form>
+			<form @submit.prevent="setStreamer">
+				<b-input-group class="mt-3">
+					<b-input-group-prepend>
+						<b-button
+							style="background-color:unset; border-right:unset; border-right: unset; border-color: #4e3380;"
+							disabled
+						>
+							<font-awesome-icon icon="search"/>
+						</b-button>
+					</b-input-group-prepend>
+					<b-input
+						class="b-purple-input"
+						v-model="inputUrlOrStreamer"
+						placeholder="Search streamer with Name or URL"
+					/>
+					<b-input-group-append>
+						<b-button class="b-purple-primary" type="submit">Search</b-button>
+					</b-input-group-append>
+				</b-input-group>
+			</form>
 
-		<div v-if="selectedStreamer && streamData">
-			<br>
-			<div v-if="streamInfo" style="color:white;">
-				<h5>{{streamInfo.name}}</h5>
-				<h6>Category: {{streamInfo.category}}</h6>
-				<h6>Viewers: {{streamInfo.viewers}}</h6>
+			<div v-if="selectedStreamer && streamData">
+				<br>
+				<div v-if="streamInfo" style="color:white;">
+					<h5>{{streamInfo.name}}</h5>
+					<h6>Category: {{streamInfo.category}}</h6>
+					<h6>Viewers: {{streamInfo.viewers}}</h6>
+				</div>
+				<br>
+				<h6 style="color:white;">Pick Quality:</h6>
+				<b-button
+					class="b-purple-secondary"
+					v-for="stream_data in streamData"
+					:key="stream_data.quality"
+					@click="selectStream(stream_data)"
+					:class="{active: selectedStream && stream_data == selectedStream ? true : false}"
+				>{{stream_data.quality}}</b-button>
 			</div>
-			<br>
-			<h6 style="color:white;">Pick Quality:</h6>
-			<b-button
-				class="b-purple-secondary"
-				v-for="stream_data in streamData"
-				:key="stream_data.quality"
-				@click="selectStream(stream_data)"
-				:class="{active: selectedStream && stream_data == selectedStream ? true : false}"
-			>{{stream_data.quality}}</b-button>
-		</div>
 
-		<br>
-		<b-button
-			class="b-purple-primary"
-			v-if="selectedStreamer && selectedStream"
-			@click="playStream"
-			:disabled="this.$data.streamIsPlaying"
-		>
-			<div v-if="!this.$data.streamIsPlaying">Play</div>
-			<div v-else>Playing</div>
-		</b-button>
+			<br>
+			<b-button
+				class="b-purple-primary"
+				v-if="selectedStreamer && selectedStream"
+				@click="playStream"
+				:disabled="this.$data.streamIsPlaying"
+			>
+				<div v-if="!this.$data.streamIsPlaying">Play</div>
+				<div v-else>Playing</div>
+			</b-button>
+		</div>
 	</div>
 </template>
 
@@ -155,8 +158,10 @@ export default {
 						this.$data.streamInfo = {
 							name: stream_info.name,
 							category: stream_info.category,
-							viewers: stream_info.viewers
+							viewers: stream_info.viewers,
+							preview: stream_info.preview
 						};
+						this.setBackgroundImage();
 					}
 				},
 				error => {
@@ -167,6 +172,13 @@ export default {
 		selectStream: function(stream_data) {
 			console.log('selectStream()');
 			this.$data.selectedStream = stream_data;
+		},
+		setBackgroundImage: function() {
+			$('.background_image').css(
+				'background-image',
+				`url(${this.$data.streamInfo.preview})`
+			);
+			$('.background_image').css('opacity', 0.3);
 		}
 	}
 };
