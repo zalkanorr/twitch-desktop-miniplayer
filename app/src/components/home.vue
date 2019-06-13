@@ -57,9 +57,9 @@
 <script>
 import VideoPlayer from './video-player.vue';
 import { ipcRenderer } from 'electron';
-const twitch_client_id = '1a6wn2y0bpzxsr5senaoz7llfpyvgc';
-const twitch = require('twitch-m3u8')(twitch_client_id);
-const axios = require('axios');
+const config = require('../../../config.json');
+const twitch = require('twitch-m3u8')(config.twitch_client_id);
+const twitch_api_lib = require('../../../libs/twitch_api_lib');
 
 export default {
 	name: 'home',
@@ -140,42 +140,29 @@ export default {
 								stream_data.splice(index, 1);
 						});
 						this.$data.streamData = stream_data;
-						this.getAndSetStreamInfo();
+						this.getStreamInfo();
 					})
 					.catch(err => console.error(err));
 			} else {
 				console.log('getStreams()->There is not a selected streamer');
 			}
 		},
-		getAndSetStreamInfo: function() {
-			console.log('getAndSetStreamInfo()');
-			axios
-				.get(
-					'https://api.twitch.tv/kraken/streams/' +
-						this.$data.selectedStreamer,
-					{
-						headers: { 'Client-ID': twitch_client_id }
-					}
-				)
-				.then(res => {
-					// If stream is online
-					if (res.data.stream) {
-						let display_name = res.data.stream.channel.display_name;
-						let stream_category = res.data.stream.game;
-						let stream_viewers = res.data.stream.viewers;
-						let stream_preview = res.data.stream.preview.medium;
+		getStreamInfo: function() {
+			console.log('getStreamInfo()');
+			twitch_api_lib.getStreamerInfo(this.$data.selectedStreamer).then(
+				stream_info => {
+					if (stream_info) {
 						this.$data.streamInfo = {
-							name: display_name,
-							category: stream_category,
-							viewers: stream_viewers
+							name: stream_info.name,
+							category: stream_info.category,
+							viewers: stream_info.viewers
 						};
-					} else {
-						this.$data.streamInfo = null;
 					}
-				})
-				.catch(error => {
-					console.error(error);
-				});
+				},
+				error => {
+					console.log(error);
+				}
+			);
 		},
 		selectStream: function(stream_data) {
 			console.log('selectStream()');
