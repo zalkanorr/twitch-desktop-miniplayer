@@ -12,7 +12,7 @@
 
 
 ## To-Do
-- [ ] Add tray functionality
+- [x] Add tray functionality
 - [ ] Add config
 - [ ] Add settings UI
 - [ ] Add twitch auth
