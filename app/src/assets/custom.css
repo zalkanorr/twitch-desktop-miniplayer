@@ -88,6 +88,16 @@ body > div {
 	color: #faf9fa !important;
 }
 
+.list-group-item.active, .list-group-item.active:active {
+	background: #6441a4 !important;
+    background-clip: padding-box !important;
+    border: 1px solid #6441a4 !important;
+    border-color: #6441a4 !important;
+    outline: #6441a4 !important;
+	color: #faf9fa !important;
+	box-shadow: 0px 0 5px -1px #6441a4 !important;
+}
+
 .b-purple-input:focus, .b-purple-input:active,
 .b-purple-input > .input-group > .form-control:focus,
 .b-purple-input > .input-group > .form-control:active,

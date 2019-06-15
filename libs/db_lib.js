@@ -15,10 +15,18 @@ module.exports = {
 			.map('username')
 			.value();
 	},
+	getTop5FavouriteStreamers: function () {
+		return db
+			.get('favorite_streamers')
+			.take(5)
+			.map('username')
+			.value();
+	},
 	getFavouriteStreamersWhereNameContains: function (input) {
 		return db
 			.get('favorite_streamers')
 			.filter(streamer => streamer.username.startsWith(input))
+			.take(5)
 			.map('username')
 			.value();
 	},
