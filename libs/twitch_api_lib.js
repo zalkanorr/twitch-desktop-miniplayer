@@ -20,8 +20,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			this.getStreamer(username).then(
 				stream_data => {
-					// If stream is online
-					if (stream_data.stream) {
+					if (this.isStreamerOnline(username, stream_data)) {
 						return resolve({
 							name: stream_data.stream.channel.display_name,
 							category: stream_data.stream.game,
@@ -37,6 +36,13 @@ module.exports = {
 					return reject(null);
 				}
 			);
+		});
+	},
+	isStreamerOnline: async function (username, stream_data = null) {
+		return new Promise(async (resolve, reject) => {
+			if (!stream_data) stream_data = await this.getStreamer(username);
+			if (stream_data.stream) return resolve(true);
+			return resolve(false);
 		});
 	}
 };
