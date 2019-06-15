@@ -176,17 +176,17 @@ export default {
 			console.log('getStreams()');
 			if (this.$data.selectedStreamer) {
 				if (!twitch_api_lib.isStreamerOnline(this.$data.selectedStreamer)) {
-				twitch
-					.getStream(this.$data.selectedStreamer)
-					.then(stream_data => {
-						console.log('getStreams()->available qualities:');
-						stream_data.forEach(function(element, index) {
-							console.log(`getStreams()-> ${element.quality}`);
-							if (element && element.quality == 'audio_only') stream_data.splice(index, 1);
-						});
-						this.$data.streamData = stream_data;
-						this.getStreamInfo();
-					})
+					twitch
+						.getStream(this.$data.selectedStreamer)
+						.then(stream_data => {
+							console.log('getStreams()->available qualities:');
+							stream_data.forEach(function(element, index) {
+								console.log(`getStreams()-> ${element.quality}`);
+								if (element && element.quality == 'audio_only') stream_data.splice(index, 1);
+							});
+							this.$data.streamData = stream_data;
+							this.getStreamInfo();
+						})
 						.catch(err => {
 							this.setError(err.message);
 							console.error(err);
