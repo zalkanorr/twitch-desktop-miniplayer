@@ -19,7 +19,7 @@
 						placeholder="Search streamer with Name or URL"
 						class="b-purple-input"
 						style="width:75%"
-						:data="getFavouriteStreamers()"
+						:data="inputFavouriteStreamersData"
 						backgroundVariant="dark"
 						textVariant="white"
 					/>
@@ -95,7 +95,8 @@ export default {
 		inputUrlOrStreamer: 'https://www.twitch.tv/reckful',
 		streamIsPlaying: false,
 		streamInfo: null,
-		selectedStreamerIsFavourite: false
+		selectedStreamerIsFavourite: false,
+		inputFavouriteStreamersData: []
 	}),
 	components: {
 		VideoPlayer,
@@ -205,8 +206,18 @@ export default {
 			}
 			this.setIsFavouriteStreamer();
 		},
-		getFavouriteStreamers: function() {
-			return db_lib.getFavouriteStreamers();
+		getinputFavouriteStreamersData: async function(input) {
+			let favourite_streamers = db_lib.getFavouriteStreamersWhereNameContains(input);
+			for await (let [index, streamer] of favourite_streamers.entries()) {
+				let is_streamer_online = await twitch_api_lib.isStreamerOnline(streamer);
+				favourite_streamers[index] += is_streamer_online ? ' - Online' : ' - Offline';
+			}
+			this.$data.inputFavouriteStreamersData = favourite_streamers;
+		}
+	},
+	watch: {
+		inputUrlOrStreamer: function(newInput, oldInput) {
+			if (newInput.length > 1) this.getinputFavouriteStreamersData(newInput);
 		}
 	}
 };

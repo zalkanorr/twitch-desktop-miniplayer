@@ -9,9 +9,16 @@ module.exports = {
 			db.set('favorite_streamers', []).write();
 		}
 	},
-	getFavouriteStreamers: function () {
+	getAllFavouriteStreamers: function () {
 		return db
 			.get('favorite_streamers')
+			.map('username')
+			.value();
+	},
+	getFavouriteStreamersWhereNameContains: function (input) {
+		return db
+			.get('favorite_streamers')
+			.filter(streamer => streamer.username.startsWith(input))
 			.map('username')
 			.value();
 	},
