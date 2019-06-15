@@ -1,4 +1,4 @@
-const config = require('../config.json');
+const { remote } = require('electron');
 const axios = require('axios');
 
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			axios
 				.get('https://api.twitch.tv/kraken/streams/' + username, {
-					headers: { 'Client-ID': config.twitch_client_id }
+					headers: { 'Client-ID': remote.getGlobal('config').twitch_client_id }
 				})
 				.then(response => {
 					return resolve(response.data);

@@ -70,9 +70,9 @@
 <script>
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import VideoPlayer from './video-player.vue';
-import { ipcRenderer } from 'electron';
-const config = require('../../../config.json');
-const twitch = require('twitch-m3u8')(config.twitch_client_id);
+import { ipcRenderer, remote } from 'electron';
+
+const twitch = require('twitch-m3u8')(remote.getGlobal('config').twitch_client_id);
 const twitch_api_lib = require('../../../libs/twitch_api_lib');
 const db_lib = require('../../../libs/db_lib');
 

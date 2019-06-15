@@ -3,6 +3,8 @@ const electron = require('electron');
 const { app, BrowserWindow, ipcMain, Tray, Menu } = electron;
 const path = require('path');
 
+// global config variable
+global.config = require('./config.json');
 // The main interface window
 var mainWindow = null;
 // The window that contains the stream player

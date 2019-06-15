@@ -39,7 +39,8 @@ module.exports = {
 		new webpack.NamedModulesPlugin(),
 
 		new CopyWebpackPlugin([
-			{ from: path.join(__dirname, "..", "..", "app", "src", "assets", "icon.png"), to: path.join(__dirname, "..", "..", "app", "build") }
+			{ from: path.join(__dirname, "..", "..", "app", "src", "assets", "icon.png"), to: path.join(__dirname, "..", "..", "app", "build") },
+			{ from: path.join(__dirname, "..", "..", "config.json"), to: path.join(__dirname, "..", "..", "app", "build") }
 		])
 	],
 
