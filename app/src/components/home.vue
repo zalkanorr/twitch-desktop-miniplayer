@@ -21,6 +21,7 @@
 						class="b-purple-input"
 						list="favourite-streamers-input-list"
 						@click="inputUrlOrStreamer ? getinputFavouriteStreamersData(inputUrlOrStreamer) : getinputFavouriteStreamersData()"
+						@keydown.tab="autocompleteInput()"
 					></b-form-input>
 
 					<b-input-group-append>
@@ -177,25 +178,25 @@ export default {
 			if (this.$data.selectedStreamer) {
 				twitch_api_lib.isStreamerOnline(this.$data.selectedStreamer).then(is_streamer_online => {
 					if (is_streamer_online) {
-					twitch
-						.getStream(this.$data.selectedStreamer)
-						.then(stream_data => {
-							console.log('getStreams()->available qualities:');
-							stream_data.forEach(function(element, index) {
-								console.log(`getStreams()-> ${element.quality}`);
-								if (element && element.quality == 'audio_only') stream_data.splice(index, 1);
+						twitch
+							.getStream(this.$data.selectedStreamer)
+							.then(stream_data => {
+								console.log('getStreams()->available qualities:');
+								stream_data.forEach(function(element, index) {
+									console.log(`getStreams()-> ${element.quality}`);
+									if (element && element.quality == 'audio_only') stream_data.splice(index, 1);
+								});
+								this.$data.streamData = stream_data;
+								this.getStreamInfo();
+							})
+							.catch(err => {
+								this.setError(err.message);
+								console.error(err);
 							});
-							this.$data.streamData = stream_data;
-							this.getStreamInfo();
-						})
-						.catch(err => {
-							this.setError(err.message);
-							console.error(err);
-						});
-				} else {
-					this.setError('Stream is offline');
-					console.error('Stream is offline');
-				}
+					} else {
+						this.setError('Stream is offline');
+						console.error('Stream is offline');
+					}
 				});
 			} else {
 				console.log('getStreams()->There is not a selected streamer');
@@ -275,6 +276,12 @@ export default {
 			} else {
 				this.hideInputList();
 				this.setStreamer();
+			}
+		},
+		autocompleteInput: function() {
+			if (this.$data.inputFavouriteStreamersData[0]) {
+				this.hideInputList();
+				this.$data.inputUrlOrStreamer = this.$data.inputFavouriteStreamersData[0].username;
 			}
 		},
 		setError: function(error_message) {
