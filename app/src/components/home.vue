@@ -31,7 +31,7 @@
 			<div
 				id="favourite-streamers-input-list"
 				@mouseleave="hideInputList()"
-				style="position:absolute; width:71%;"
+				style="position:absolute; width:71%; z-index:3;"
 			>
 				<a
 					v-for="streamer in inputFavouriteStreamersData"
@@ -70,6 +70,9 @@
 					:class="{active: selectedStream && stream_data == selectedStream ? true : false}"
 				>{{stream_data.quality}}</b-button>
 			</div>
+
+			<br>
+			<b-alert v-if="error" show variant="danger">{{error}}</b-alert>
 
 			<br>
 			<b-button
@@ -113,7 +116,8 @@ export default {
 		streamIsPlaying: false,
 		streamInfo: null,
 		selectedStreamerIsFavourite: false,
-		inputFavouriteStreamersData: []
+		inputFavouriteStreamersData: [],
+		error: null
 	}),
 	components: {
 		VideoPlayer
@@ -148,9 +152,11 @@ export default {
 							this.getStreams();
 							this.setIsFavouriteStreamer();
 						} else {
+							this.setError('Link is not valid');
 							console.log('setStreamer()->name_from_link not valid');
 						}
 					} else {
+						this.setError('Link is not valid');
 						console.log('setStreamer()->Link is not valid');
 					}
 				} else {
@@ -160,6 +166,7 @@ export default {
 						this.getStreams();
 						this.setIsFavouriteStreamer();
 					} else {
+						this.setError('Name is not valid');
 						console.log('setStreamer()->Invalid name');
 					}
 				}
@@ -250,6 +257,7 @@ export default {
 			$('#favourite-streamers-input-list').hide();
 		},
 		formSubmit: function() {
+			this.emptyError();
 			let active_list_item = $('.list-group-item.active');
 			if (active_list_item[0]) {
 				let username = active_list_item[0].attr('id').split('-')[1];
@@ -258,6 +266,15 @@ export default {
 				this.hideInputList();
 				this.setStreamer();
 			}
+		},
+		setError: function(error_message) {
+			this.$data.error = error_message;
+			setTimeout(() => {
+				this.emptyError();
+			}, 3000);
+		},
+		emptyError: function() {
+			this.$data.error = null;
 		}
 	},
 	watch: {
