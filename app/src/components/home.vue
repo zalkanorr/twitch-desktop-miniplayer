@@ -155,9 +155,13 @@ export default {
 					}
 				} else {
 					console.log('setStreamer()->Considered name');
-					this.$data.selectedStreamer = this.$data.inputUrlOrStreamer;
-					this.getStreams();
-					this.setIsFavouriteStreamer();
+					if (this.$data.inputUrlOrStreamer.match(/^[a-zA-Z0-9_]{4,25}$/)) {
+						this.$data.selectedStreamer = this.$data.inputUrlOrStreamer;
+						this.getStreams();
+						this.setIsFavouriteStreamer();
+					} else {
+						console.log('setStreamer()->Invalid name');
+					}
 				}
 			}
 		},
