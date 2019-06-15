@@ -175,7 +175,8 @@ export default {
 		getStreams: function() {
 			console.log('getStreams()');
 			if (this.$data.selectedStreamer) {
-				if (!twitch_api_lib.isStreamerOnline(this.$data.selectedStreamer)) {
+				twitch_api_lib.isStreamerOnline(this.$data.selectedStreamer).then(is_streamer_online => {
+					if (is_streamer_online) {
 					twitch
 						.getStream(this.$data.selectedStreamer)
 						.then(stream_data => {
@@ -195,6 +196,7 @@ export default {
 					this.setError('Stream is offline');
 					console.error('Stream is offline');
 				}
+				});
 			} else {
 				console.log('getStreams()->There is not a selected streamer');
 			}
