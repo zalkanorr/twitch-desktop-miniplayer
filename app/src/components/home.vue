@@ -33,7 +33,7 @@
 				>{{stream_data.quality}}</b-button>
 			</div>
 
-			<br>
+			<br v-if="error">
 			<b-alert v-if="error" show variant="danger">{{error}}</b-alert>
 
 			<br>
