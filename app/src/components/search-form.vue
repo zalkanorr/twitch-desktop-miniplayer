@@ -46,14 +46,11 @@
 </template>
 
 <script>
-import { ipcRenderer, remote } from 'electron';
-
 const db_lib = require('../../../libs/db_lib');
 const twitch_api_lib = require('../../../libs/twitch_api_lib');
 
 export default {
 	name: 'search-form',
-	props: ['inputUrlOrStreamer'],
 	data: () => ({
 		searchInput: '',
 		inputFavouriteStreamersData: [],

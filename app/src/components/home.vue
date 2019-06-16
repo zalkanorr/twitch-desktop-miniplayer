@@ -4,7 +4,6 @@
 		<div style="padding:10%;">
 			<h1 style="color:white;">Twitch Desktop Miniplayer</h1>
 			<search-form
-				:inputUrlOrStreamer="inputUrlOrStreamer"
 				v-on:setStreamer="setStreamer"
 				v-on:setInputUrlOrStreamer="setInputUrlOrStreamer"
 				v-on:emptyError="emptyError"
