@@ -56,25 +56,41 @@ export default {
 	props: ['inputUrlOrStreamer'],
 	data: () => ({
 		search_input: '',
-		inputFavouriteStreamersData: []
+		inputFavouriteStreamersData: [],
+		favouriteStreamersData: []
 	}),
 	mounted() {
 		db_lib.initialize();
+		// Get initial favourite streamers data
+		this.getFavouriteStreamersData();
+		// Update favourite streamers data every minute
+		setInterval(() => {
+			this.getFavouriteStreamersData();
+		}, 60000);
 	},
 	methods: {
 		setStreamer: function() {
 			this.$emit('setInputUrlOrStreamer', this.$data.search_input);
 			this.$emit('setStreamer');
 		},
-		getinputFavouriteStreamersData: async function(input = null) {
+		getFavouriteStreamersData: async function(input = null) {
 			let favourite_streamers_data = [];
-			let favourite_streamers = input ? db_lib.getFavouriteStreamersWhereNameContains(input) : db_lib.getTop5FavouriteStreamers();
+			let favourite_streamers = db_lib.getAllFavouriteStreamers();
 			for await (let [index, streamer] of favourite_streamers.entries()) {
 				let is_streamer_online = await twitch_api_lib.isStreamerOnline(streamer);
 				favourite_streamers_data.push({ username: streamer, status: is_streamer_online ? 'Online' : 'Offline' });
 			}
-			if (!input || this.$data.search_input != input) $('#favourite-streamers-input-list').show();
+			this.$data.favouriteStreamersData = favourite_streamers_data;
+		},
+		getinputFavouriteStreamersData: async function(input = null) {
+			let favourite_streamers_data;
+			if (input) {
+				favourite_streamers_data = this.$data.favouriteStreamersData.filter(streamer => streamer.username.startsWith(input));
+			} else {
+				favourite_streamers_data = this.$data.favouriteStreamersData;
+			}
 			this.$data.inputFavouriteStreamersData = favourite_streamers_data;
+			if (!input || input != this.$data.inputFavouriteStreamersData[0].username) $('#favourite-streamers-input-list').show();
 		},
 		addActive: function(selector) {
 			$(selector).addClass('active');

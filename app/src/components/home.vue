@@ -78,7 +78,6 @@ export default {
 		streamIsPlaying: false,
 		streamInfo: null,
 		selectedStreamerIsFavourite: false,
-		inputFavouriteStreamersData: [],
 		error: null
 	}),
 	components: {
