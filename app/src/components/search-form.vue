@@ -11,11 +11,11 @@
 			</b-input-group-prepend>
 
 			<b-form-input
-				v-model="search_input"
+				v-model="searchInput"
 				placeholder="Search streamer with Name or URL"
 				class="b-purple-input"
 				list="favourite-streamers-input-list"
-				@click="search_input ? getinputFavouriteStreamersData(search_input) : getinputFavouriteStreamersData()"
+				@click="searchInput ? getinputFavouriteStreamersData(searchInput) : getinputFavouriteStreamersData()"
 				@keydown.tab="autocompleteInput()"
 			/>
 
@@ -55,7 +55,7 @@ export default {
 	name: 'search-form',
 	props: ['inputUrlOrStreamer'],
 	data: () => ({
-		search_input: '',
+		searchInput: '',
 		inputFavouriteStreamersData: [],
 		favouriteStreamersData: []
 	}),
@@ -70,7 +70,7 @@ export default {
 	},
 	methods: {
 		setStreamer: function() {
-			this.$emit('setInputUrlOrStreamer', this.$data.search_input);
+			this.$emit('setInputUrlOrStreamer', this.$data.searchInput);
 			this.$emit('setStreamer');
 		},
 		getFavouriteStreamersData: async function(input = null) {
@@ -99,7 +99,7 @@ export default {
 			$(selector).removeClass('active');
 		},
 		selectStreamer: function(username) {
-			this.$data.search_input = username;
+			this.$data.searchInput = username;
 			this.hideInputList();
 		},
 		hideInputList: function() {
@@ -119,12 +119,12 @@ export default {
 		autocompleteInput: function() {
 			if (this.$data.inputFavouriteStreamersData[0]) {
 				this.hideInputList();
-				this.$data.search_input = this.$data.inputFavouriteStreamersData[0].username;
+				this.$data.searchInput = this.$data.inputFavouriteStreamersData[0].username;
 			}
 		}
 	},
 	watch: {
-		search_input: function(newInput, oldInput) {
+		searchInput: function(newInput, oldInput) {
 			if (newInput.length == 0) this.getinputFavouriteStreamersData();
 			if (newInput.length > 0) this.getinputFavouriteStreamersData(newInput);
 		}
