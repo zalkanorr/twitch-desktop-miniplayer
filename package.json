@@ -33,7 +33,7 @@
     "vue-router": "^3.0.6"
   },
   "devDependencies": {
-    "electron": "^5.0.3",
+    "electron": "^7.2.4",
     "aws-sdk": "^2.471.0",
     "css-loader": "^2.1.1",
 	"electron-builder": "^20.43.0",
